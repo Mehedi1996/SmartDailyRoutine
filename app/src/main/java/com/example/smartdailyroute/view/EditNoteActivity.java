@@ -26,30 +26,18 @@ public class EditNoteActivity extends AppCompatActivity {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_edit_note);
         noteViewModel = ViewModelProviders.of(EditNoteActivity.this).get(NoteViewModel.class);
 
-        binding.saveNote.setOnClickListener(new View.OnClickListener() {
+        binding.btUpdateNote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            updateNote();
+
             }
         });
-    }
-    public void updateNote(){
 
-        String title = binding.editTextTitle.getText().toString();
-        String description = binding.editTextDescription.getText().toString();
-        int priority = Integer.valueOf(binding.editTextPriority.getText().toString());
+        binding.btCancelNote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-
-        noteViewModel.update(new Note(title, description, priority));
-
-        Toast.makeText(EditNoteActivity.this, " update new note", Toast.LENGTH_SHORT).show();
-
-        binding.editTextTitle.setText("");
-        binding.editTextDescription.setText("");
-        binding.editTextPriority.setText("");
-
-        Intent intent = new Intent(EditNoteActivity.this, MainActivity.class);
-        startActivity(intent);
-
+            }
+        });
     }
 }

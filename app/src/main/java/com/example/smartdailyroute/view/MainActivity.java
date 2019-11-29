@@ -23,7 +23,7 @@ import com.example.smartdailyroute.viewmodel.NoteViewModel;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NoteAdapter.OnDeleteClickListener {
 
     private ActivityMainBinding binding;
     private NoteViewModel noteViewModel;
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
         binding.recyclerView.setHasFixedSize(true);
 
-        final NoteAdapter adapter = new NoteAdapter();
+        final NoteAdapter adapter = new NoteAdapter( this);
         binding.recyclerView.setAdapter(adapter);
 
 
@@ -64,6 +64,14 @@ public class MainActivity extends AppCompatActivity {
         adapter.setOnitemClick(new NoteAdapter.OnitemClickListener() {
             @Override
             public void onItemClick(Note note) {
+             /*   Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
+                startActivity(intent);*/
+            }
+        });
+
+        adapter.setOnEdititemClick(new NoteAdapter.OnEditClickListener() {
+            @Override
+            public void onEditItem(Note note) {
                 Intent intent = new Intent(MainActivity.this, EditNoteActivity.class);
                 startActivity(intent);
             }
@@ -86,4 +94,15 @@ public class MainActivity extends AppCompatActivity {
             }
         }).attachToRecyclerView(binding.recyclerView);
     }
+
+
+    @Override
+    public void onDeleteItem(Note note) {
+
+      noteViewModel.delete(note);
+
+        Toast.makeText(this, "Single Note is Deleted", Toast.LENGTH_SHORT).show();
+    }
+
+
 }
